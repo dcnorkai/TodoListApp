@@ -1,0 +1,16 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TodoListApp.Views.TodoListPage"
+             Title="Todo List">
+    <StackLayout Padding="20">
+        <Entry x:Name="todoEntry" Placeholder="Enter a todo item" />
+        <Button Text="Add Todo" Clicked="AddTodo_Clicked" />
+        <ListView x:Name="todoListView" ItemsSource="{Binding TodoItems}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>
