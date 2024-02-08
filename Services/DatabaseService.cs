@@ -21,6 +21,7 @@ namespace TodoListApp.Services
                 string dbpath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "UserDatabase.db3");
                 _dbConnection = new SQLiteAsyncConnection(dbpath);
                 await _dbConnection.CreateTableAsync<User>();
+                await _dbConnection.CreateTableAsync<TodoItem>();
             }
         }
 
