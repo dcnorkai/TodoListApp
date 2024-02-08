@@ -10,6 +10,7 @@ namespace TodoListApp.Models
         [Unique]
         public string Username { get; set; }
         public string Password { get; set; }
+        public ICollection<TodoItem> TodoLists { get; set; } = new List<TodoItem>();
         public string Salt { get; set; }
         [Unique]
         public string Email { get; set; }
