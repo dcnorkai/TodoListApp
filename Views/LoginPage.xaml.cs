@@ -5,22 +5,6 @@ using SQLite;
 
 namespace TodoListApp.Views
 {
-    /*public class UserRepository
-    {
-        private readonly SQLiteAsyncConnection _dbConnection;
-
-        public UserRepository(DatabaseService databaseService)
-        {
-            _dbConnection = databaseService.GetDbConnection();
-        }
-
-        public async Task<User> GetUserByUsernameOrEmail(string usernameOrEmail)
-        {
-            // Check if the usernameOrEmail matches a username or email in the database
-            return await _dbConnection.Table<User>()
-                                      .FirstOrDefaultAsync(u => u.Username == usernameOrEmail || u.Email == usernameOrEmail);
-        }
-    }*/
     public partial class LoginPage : ContentPage
     {
         private readonly AuthenticationService authService;
@@ -33,25 +17,27 @@ namespace TodoListApp.Views
 
         private async void OnLoginClicked(object sender, EventArgs e)
         {
-            /*User user = new User
-            {
-                Username = usernameEntry.Text,
-                Password = passwordEntry.Text
-            };*/
+            string username = usernameEntry.Text;
+            string password = passwordEntry.Text;
 
-            if ((usernameEntry.Text != null) && (passwordEntry.Text != null) && (authService != null))
-            {  
-                    bool isAuthenticated = await authService.AuthenticateUser(usernameEntry.Text, passwordEntry.Text);
-                    if (isAuthenticated)
-                    {
-                        // Navigate to todo list page
-                        await Navigation.PushAsync(new TodoListPage());
-                        await DisplayAlert("Success", "You have logged in!", "OK");
-                }
-                    else
-                    {
-                        await DisplayAlert("Error", "Invalid username or password", "OK");
-                    }
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+            {
+                await DisplayAlert("Error", "Please enter both username and password", "OK");
+                return;
+            }
+
+            if (authService == null)
+            {
+                await DisplayAlert("Error", "Authentication service is not available", "OK");
+                return;
+            }
+
+            bool isAuthenticated = await authService.AuthenticateUser(username, password);
+            if (isAuthenticated)
+            {
+                // Navigate to todo list page
+                await Navigation.PushAsync(new TodoListPage());
+                await DisplayAlert("Success", "You have logged in!", "OK");
             }
             else
             {

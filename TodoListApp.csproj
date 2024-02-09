@@ -81,4 +81,9 @@
 	  </MauiXaml>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Controllers\" />
+	  <Folder Include="Models\ViewModels\" />
+	</ItemGroup>
+
 </Project>
