@@ -76,6 +76,9 @@
 	  <MauiXaml Update="Views\LoginPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\MainPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\TodoListPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -83,7 +86,7 @@
 
 	<ItemGroup>
 	  <Folder Include="Controllers\" />
-	  <Folder Include="Models\ViewModels\" />
+	  <Folder Include="ViewModels\" />
 	</ItemGroup>
 
 </Project>
