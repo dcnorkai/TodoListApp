@@ -10,7 +10,7 @@ namespace TodoListApp.Models
         [Unique]
         public string Username { get; set; }
         public string Password { get; set; }
-        public ICollection<TodoItem> TodoLists { get; set; } = new List<TodoItem>();
+        //public ICollection<TodoItem> TodoLists { get; set; } = new List<TodoItem>();
         public string Salt { get; set; }
         [Unique]
         public string Email { get; set; }
@@ -18,6 +18,8 @@ namespace TodoListApp.Models
 
         public User()
         {
+            // Initialize TodoLists here
+            //TodoLists = new List<TodoItem>();
             // Initialize Username here
             Username = string.Empty; // or any default value
             // Initialize Password here

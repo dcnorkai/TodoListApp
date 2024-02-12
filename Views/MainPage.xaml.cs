@@ -15,7 +15,7 @@ public partial class MainPage : ContentPage
 
     private void OnRegisterClicked(object sender, EventArgs e)
     {
-        // Navigate to user creation page
-        Navigation.PushAsync(new CreateUserPage());
+        // Navigate to registration page
+        Navigation.PushAsync(new RegisterPage());
     }
 }

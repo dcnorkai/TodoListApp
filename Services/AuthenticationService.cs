@@ -26,12 +26,11 @@ namespace TodoListApp.Services
         {
             // Retrieve the user from the database based on the provided username or email
             var user = await _userRepository.GetUserByUsername(username);
-            //User user = null;
 
             if (user != null)
             {
                 // Hash the provided password using the same salt as stored in the database
-                string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password, user.Password);
+                string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password, user.Salt);
 
                 // Compare the hashed password with the hashed password retrieved from the database
                 if (hashedPassword == user.Password)
@@ -56,17 +55,29 @@ namespace TodoListApp.Services
 
         public async Task<bool> IsUserNameUnique(string userName)
         {
-            
             // Check if the UserName already exists in the database
             var existingUser = await _databaseService._dbConnection.Table<User>().Where(u => u.Username == userName).FirstOrDefaultAsync();
-            return existingUser == null; // Return true if UserName is unique, false otherwise
+            if (existingUser == null)
+            {
+                return true; // Return true if UserName is unique, false otherwise
+            }
+            return false;
         }
 
         public async Task<bool> IsEmailUnique(string email)
         {
-            // Check if the Email already exists in the database
-            var existingUser = await _databaseService._dbConnection.Table<User>().Where(u => u.Email == email).FirstOrDefaultAsync();
-            return existingUser == null; // Return true if Email is unique, false otherwise
+            try
+            {
+                // Check if the Email already exists in the database
+                var existingUser = await _databaseService._dbConnection.Table<User>().Where(u => u.Email == email).FirstOrDefaultAsync();
+                return existingUser == null; // Return true if Email is unique, false otherwise
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions (e.g., table creation failure)
+                Console.WriteLine($"Error: {ex.Message}");
+                return false; // Return false to indicate failure
+            }
         }
 
         public async Task<int> CreateUser(User user)
@@ -76,17 +87,14 @@ namespace TodoListApp.Services
             {
                 return (-1); //Error: Email, username, and password are required.
             }
-
             if (!IsValidEmail(user.Email))
             {
                 return (-2); //Error: Invalid email format.
             }
-
             if (user.Password.Length < 8)
             {
                 return (-3); //Error: Password must be at least 8 characters long.
             }
-
             if (!(await IsUserNameUnique(user.Username) && await IsEmailUnique(user.Email)))
             {
                 return (-4); //Error: UserName and Email must be unique

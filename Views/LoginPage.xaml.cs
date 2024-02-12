@@ -48,7 +48,7 @@ namespace TodoListApp.Views
         private void OnCreateAccountClicked(object sender, EventArgs e)
         {
             // Navigate to user creation page
-            Navigation.PushAsync(new CreateUserPage());
+            Navigation.PushAsync(new RegisterPage());
         }
     }
 }

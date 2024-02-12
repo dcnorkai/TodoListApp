@@ -4,11 +4,11 @@ using Microsoft.Maui.Controls;
 
 namespace TodoListApp.Views
 {
-    public partial class CreateUserPage : ContentPage
+    public partial class RegisterPage : ContentPage
     {
         private readonly AuthenticationService authService;
 
-        public CreateUserPage()
+        public RegisterPage()
         {
             InitializeComponent();
             authService = new AuthenticationService();
@@ -29,6 +29,8 @@ namespace TodoListApp.Views
             {
                 case 1: //Success
                     await DisplayAlert("Success", "User created successfully", "OK");
+                    // Navigate to login page
+                    await Navigation.PushAsync(new LoginPage());
                     break;
                 case -1: //Error: Email, username, and password are required.
                     await DisplayAlert("Error", "Email, username, and password are required", "OK");
